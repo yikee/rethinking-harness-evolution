@@ -1,0 +1,73 @@
+_base: "./exp-simple-code-base.yaml"
+_name: "dry-run-code-agent-claude-opus46-k5"
+_description: "Dry-run Claude Opus 4.6 code-agent-only baseline: no evolution, k rollouts per task"
+_tags: ["claude", "opus46", "dry-run", "code-agent-baseline", "pass@k"]
+
+path: "./datasets/terminal-bench-2-1/tasks"
+
+llm:
+  api_key: "${CLAUDE_API_KEY}"
+  base_url: "https://api.anthropic.com"
+  model: "claude-opus-4-6"
+
+harbor:
+  k: 5
+  n_concurrent: 10
+
+code_agent_baseline:
+  n_concurrent_tasks: 1
+  n_concurrent_rollouts: 5
+
+code_agent_patch:
+  tool_call_mode: anthropic
+  llm_config:
+    api_type: anthropic_chat_completion
+    max_tokens: 128000
+    reasoning: null
+    thinking:
+      type: adaptive
+    output_config:
+      effort: "high"
+
+agent_debugger:
+  llm:
+    api_key: "${CLAUDE_API_KEY}"
+    base_url: "https://api.anthropic.com"
+    model: "claude-opus-4-6"
+    api_type: anthropic_chat_completion
+    max_tokens: 128000
+
+evolve_agent:
+  tool_call_mode: anthropic
+  llm_config:
+    api_key: "${CLAUDE_API_KEY}"
+    base_url: "https://api.anthropic.com"
+    model: "claude-opus-4-6"
+    api_type: anthropic_chat_completion
+    max_tokens: 128000
+    reasoning: null
+    thinking:
+      type: adaptive
+    output_config:
+      effort: "high"
+
+explore_agent_patch:
+  tool_call_mode: anthropic
+  llm_config:
+    api_type: anthropic_chat_completion
+    max_tokens: 128000
+    reasoning: null
+    thinking:
+      type: adaptive
+    output_config:
+      effort: "high"
+
+explore_agent:
+  enabled: false
+  model: "claude-opus-4-6"
+
+best_of_n:
+  enabled: false
+
+notify:
+  enabled: false

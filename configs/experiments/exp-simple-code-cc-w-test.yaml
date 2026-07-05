@@ -1,0 +1,42 @@
+_base: "./exp-simple-code-cc-w.yaml"
+_name: "claude-opus-4.6-test"
+_description: "Held-out test split: 34 / 44 tasks (from TB 2.1 complement of train, seed=43)"
+_tags: ["model-comparison", "claude-opus-4.6", "test-split"]
+
+dataset: "terminal-bench@2.1"
+# 34 / 44 held-out tasks (seed=43); train split uses seed=42 in exp-simple-code-cc-w-train.yaml
+task_names:
+  - bn-fit-modify
+  - cancel-async-tasks
+  - chess-best-move
+  - cobol-modernization
+  - compile-compcert
+  - count-dataset-tokens
+  - db-wal-recovery
+  - extract-moves-from-video
+  - filter-js-from-html
+  - git-multibranch
+  - large-scale-text-editing
+  - largest-eigenval
+  - log-summary-date-ranges
+  - make-mips-interpreter
+  - modernize-scientific-stack
+  - mteb-retrieve
+  - multi-source-data-merger
+  - overfull-hbox
+  - password-recovery
+  - path-tracing-reverse
+  - polyglot-c-py
+  - portfolio-optimization
+  - protein-assembly
+  - prove-plus-comm
+  - pytorch-model-cli
+  - pytorch-model-recovery
+  - qemu-alpine-ssh
+  - qemu-startup
+  - raman-fitting
+  - regex-chess
+  - rstan-to-pystan
+  - sanitize-git-repo
+  - sqlite-with-gcov
+  - winning-avg-corewars

@@ -1,0 +1,84 @@
+_base: "./exp-simple-code-base.yaml"
+_name: "seq-claude-sonnet45-local-iter5-c10"
+_description: "Claude Sonnet 4.5 summary-only sequential reflection on local terminal-bench path; 5 iterations, up to 10 tasks in parallel"
+_tags: ["claude", "sonnet45", "summary-only", "sequential-reflection", "verifier-visible", "local-path", "iter5", "c10"]
+
+path: "./datasets/terminal-bench-2-1/tasks"
+
+max_iterations: 5
+target_pass_rate: 1.0
+
+harbor:
+  k: 1
+  n_concurrent: 10
+
+seq_evolution:
+  hide_test_results_from_summary: true
+  n_concurrent_tasks: 10
+  n_concurrent_rollouts: 1
+
+explore_agent:
+  enabled: false
+  model: "claude-sonnet-4-5"
+
+best_of_n:
+  enabled: false
+
+notify:
+  enabled: false
+
+# Claude Sonnet 4.5 does NOT support adaptive thinking or the `effort`
+# output_config parameter (those are Opus 4.5/4.6 / Sonnet 4.6 features).
+# Sonnet 4.5 requires manual extended thinking via
+# `thinking: {type: "enabled", budget_tokens: N}` (budget_tokens must be < max_tokens).
+# Sonnet 4.5 max output is 64000 tokens, so max_tokens cannot exceed 64000.
+# Official Anthropic model id: `claude-sonnet-4-5-20250929`; the alias
+# `claude-sonnet-4-5` is used below to match the proxy/gateway convention.
+llm:
+  api_key: "${CLAUDE_API_KEY}"
+  base_url: "https://api.anthropic.com"
+  model: "claude-sonnet-4-5"
+
+agent_debugger:
+  llm:
+    api_key: "${CLAUDE_API_KEY}"
+    base_url: "https://api.anthropic.com"
+    model: "claude-sonnet-4-5"
+    api_type: anthropic_chat_completion
+    max_tokens: 64000
+    thinking:
+      type: enabled
+      budget_tokens: 48000
+
+code_agent_patch:
+  tool_call_mode: anthropic
+  llm_config:
+    api_type: anthropic_chat_completion
+    max_tokens: 64000
+    reasoning: null
+    thinking:
+      type: enabled
+      budget_tokens: 48000
+
+evolve_agent:
+  tool_call_mode: anthropic
+  llm_config:
+    api_key: "${CLAUDE_API_KEY}"
+    base_url: "https://api.anthropic.com"
+    model: "claude-sonnet-4-5"
+    api_type: anthropic_chat_completion
+    max_tokens: 64000
+    reasoning: null
+    thinking:
+      type: enabled
+      budget_tokens: 48000
+
+explore_agent_patch:
+  tool_call_mode: anthropic
+  llm_config:
+    api_type: anthropic_chat_completion
+    max_tokens: 64000
+    reasoning: null
+    thinking:
+      type: enabled
+      budget_tokens: 48000

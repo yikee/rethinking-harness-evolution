@@ -1,0 +1,73 @@
+_base: "./exp-simple-code-base.yaml"
+_name: "per-task-gpt54mini-iter5-c10"
+_description: "GPT-5.4-mini isolated per-task harness evolution; 5 iterations, up to 10 tasks in parallel"
+_tags: ["gpt54", "per-task-evolution", "iter5", "c10"]
+
+path: "./datasets/terminal-bench-2-1/tasks"
+
+max_iterations: 5
+target_pass_rate: 1.0
+
+harbor:
+  k: 1
+  n_concurrent: 10
+
+per_task_evolution:
+  enabled: true
+  hide_test_results_from_evolver: true
+  n_concurrent_tasks: 10
+  n_concurrent_rollouts: 1
+
+explore_agent:
+  enabled: false
+
+best_of_n:
+  enabled: false
+
+notify:
+  enabled: false
+
+
+code_agent_patch:
+  llm_config:
+    api_type: openai_responses
+    max_tokens: 128000
+    reasoning:
+      effort: "high"
+      summary: "detailed"
+
+evolve_agent:
+  llm_config:
+    api_type: openai_responses
+    model: "gpt-5.4-mini"
+    max_tokens: 128000
+    reasoning:
+      effort: "high"
+      summary: "detailed"
+
+# explore_agent_patch:
+#   llm_config:
+#     api_type: openai_responses
+#     reasoning:
+#       effort: "high"
+#       summary: "detailed"
+
+llm:
+  api_key: "${GPT54_LLM_API_KEY}"
+  base_url: "${GPT54_LLM_BASE_URL}"
+  model: "gpt-5.4-mini"
+
+agent_debugger:
+  max_concurrent: 10
+  llm:
+    api_key: "${GPT54_LLM_API_KEY}"
+    base_url: "${GPT54_LLM_BASE_URL}"
+    api_type: openai_responses
+    model: "gpt-5.4-mini"
+    max_tokens: 128000
+    reasoning:
+      effort: "high"
+
+explore_agent:
+  enabled: false
+  model: "gpt-5.4-mini"

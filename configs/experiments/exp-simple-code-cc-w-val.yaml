@@ -1,0 +1,18 @@
+_base: "./exp-simple-code-cc-w.yaml"
+_name: "claude-opus-4.6-val"
+_description: "Held-out val split: 10 / 44 tasks (from TB 2.1 complement of train, seed=43)"
+_tags: ["model-comparison", "claude-opus-4.6", "val-split"]
+
+dataset: "terminal-bench@2.1"
+# 10 / 44 held-out tasks (seed=43); complement of exp-simple-code-cc-w-test.yaml
+task_names:
+  - distribution-search
+  - fix-ocaml-gc
+  - git-leak-recovery
+  - hf-model-inference
+  - install-windows-3.11
+  - llm-inference-batching-scheduler
+  - mailman
+  - mcmc-sampling-stan
+  - merge-diff-arc-agi-task
+  - tune-mjcf

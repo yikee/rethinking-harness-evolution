@@ -1,0 +1,73 @@
+_base: "../base.yaml"
+_name: "gpt5.4"
+_description: "GPT-5.4"
+_tags: ["model-comparison", "gpt5.4"]
+
+# 使用 simple code agent（与 base 的 code_agent 目录区分）
+# source_config_dir 支持相对（相对 AHE 根目录）或绝对路径
+source_config_dir: "agents/code_agent_simple"
+agent_config_filename: "code_agent.yaml"
+
+# 覆盖 base 中 harbor.k（每个 task 的 rollout 次数）
+harbor:
+  k: 1
+  n_concurrent: 10
+
+dataset: "terminal-bench@2.1"
+max_iterations: 5
+target_pass_rate: 1.0
+
+visibility:
+  # The code agent already does not receive external verifier stdout during harbor runs.
+  # This also withholds verifier/test output from the agent debugger and evolve agent.
+  hide_test_results_from_agents: true
+
+llm:
+    api_key: "${GPT54_LLM_API_KEY}"
+    base_url: "${GPT54_LLM_BASE_URL}"
+    model: "gpt-5.4"
+
+code_agent_patch:
+  tool_call_mode: openai
+  llm_config:
+    api_type: openai_responses
+    max_tokens: "__DELETE__"
+    max_output_tokens: 128000
+    temperature: "__DELETE__"
+    top_p: "__DELETE__"
+    reasoning:
+      effort: "high"
+      summary: "detailed"
+
+evolve_agent:
+  tool_call_mode: openai
+  llm_config:
+    api_key: "${GPT54_LLM_API_KEY}"
+    base_url: "${GPT54_LLM_BASE_URL}"
+    model: "gpt-5.4"
+    api_type: openai_responses
+    max_tokens: "__DELETE__"
+    max_output_tokens: 128000
+    temperature: "__DELETE__"
+    reasoning:
+      effort: "high"
+      summary: "detailed"
+
+agent_debugger:
+  max_concurrent: 1
+  timeout_per_task: 900
+  llm:
+    api_key: "${GPT54_LLM_API_KEY}"
+    base_url: "${GPT54_LLM_BASE_URL}"
+    model: "gpt-5.4"
+    api_type: openai_responses
+    max_tokens: 128000
+    reasoning:
+      effort: "high"
+      summary: "detailed"
+
+explore_agent:
+  enabled: false
+
+notify:
+  enabled: false

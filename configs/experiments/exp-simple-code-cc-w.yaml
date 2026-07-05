@@ -1,0 +1,100 @@
+_base: "../base.yaml"
+_name: "claude-opus-4.6"
+_description: "Claude Opus 4.6"
+_tags: ["model-comparison", "claude-opus-4.6"]
+
+# 使用 simple code agent（与 base 的 code_agent 目录区分）
+# source_config_dir 支持相对（相对 AHE 根目录）或绝对路径
+source_config_dir: "agents/code_agent_simple"
+agent_config_filename: "code_agent.yaml"
+
+# 覆盖 base 中 harbor.k（每个 task 的 rollout 次数）
+harbor:
+  k: 1
+  n_concurrent: 10
+
+dataset: "terminal-bench@2.1"
+max_iterations: 5
+target_pass_rate: 1.0
+
+# Provider switch: change only `active` to switch all agents.
+llm_provider:
+  active: anthropic
+  profiles:
+    openai:
+      llm:
+        api_key: "${GPT54_LLM_API_KEY}"
+        base_url: "${GPT54_LLM_BASE_URL}"
+        model: "gpt-5.4-mini"
+      tool_call_mode: openai
+      api_type: openai_responses
+      reasoning:
+        effort: "high"
+        summary: "detailed"
+    anthropic:
+      llm:
+        api_key: "${ANTHROPIC_API_KEY}"
+        base_url: "${ANTHROPIC_BASE_URL}"
+        model: "claude-opus-4-6"
+      tool_call_mode: anthropic
+      api_type: anthropic_chat_completion
+      thinking:
+        type: adaptive
+      output_config:
+        effort: high
+
+llm:
+    api_key: "${ANTHROPIC_API_KEY}"
+    base_url: "${ANTHROPIC_BASE_URL}"
+    model: "claude-opus-4-6"
+    thinking:
+      type: adaptive
+    output_config:
+      effort: high
+
+code_agent_patch:
+  tool_call_mode: anthropic
+  llm_config:
+    api_type: anthropic_chat_completion
+    max_tokens: 128000
+    temperature: "__DELETE__"
+    top_p: "__DELETE__"
+    thinking:
+      type: adaptive
+    output_config:
+      effort: high
+
+evolve_agent:
+  tool_call_mode: anthropic
+  llm_config:
+    api_key: "${ANTHROPIC_API_KEY}"
+    base_url: "${ANTHROPIC_BASE_URL}"
+    model: "claude-opus-4-6"
+    api_type: anthropic_chat_completion
+    max_tokens: 128000
+    temperature: "__DELETE__"
+    thinking:
+      type: adaptive
+    output_config:
+      effort: high
+
+agent_debugger:
+  max_concurrent: 1
+  timeout_per_task: 900
+  llm:
+    stream: true
+    api_key: "${ANTHROPIC_API_KEY}"
+    base_url: "${ANTHROPIC_BASE_URL}"
+    model: "claude-opus-4-6"
+    api_type: anthropic_chat_completion
+    max_tokens: 128000
+    thinking:
+      type: adaptive
+    output_config:
+      effort: high
+
+explore_agent:
+  enabled: false
+
+notify:
+  enabled: false

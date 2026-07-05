@@ -1,0 +1,32 @@
+# Runtime / secrets
+.env
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.DS_Store
+uv.lock
+
+# Experiment outputs (large traces; regenerate by running evolve)
+/experiments/
+
+# Ephemeral caches
+/adb_runtime/
+.code_sources/
+jobs/
+auto-exp/
+runs/
+
+# Local dataset clone (use terminal-bench@2.1 via Harbor instead)
+datasets/
+
+# Explore-agent patched configs
+agents/explore_agent/*/_patched_*.yaml
+
+# Built wheels
+agents/evolve_agent/skills/agent-debugger-cli/*.whl
+
+# Local run logs
+nohup.out
+output*
+output

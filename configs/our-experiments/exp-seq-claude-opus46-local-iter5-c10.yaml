@@ -1,0 +1,82 @@
+_base: "./exp-simple-code-base.yaml"
+_name: "seq-claude-opus46-local-iter5-c10"
+_description: "Claude Opus 4.6 summary-only sequential reflection on local terminal-bench path; 5 iterations, up to 10 tasks in parallel"
+_tags: ["claude", "opus46", "summary-only", "sequential-reflection", "verifier-visible", "local-path", "iter5", "c10"]
+
+path: "./datasets/terminal-bench-2-1/tasks"
+
+max_iterations: 5
+target_pass_rate: 1.0
+
+harbor:
+  k: 1
+  n_concurrent: 10
+
+seq_evolution:
+  hide_test_results_from_summary: false
+  n_concurrent_tasks: 10
+  n_concurrent_rollouts: 1
+
+
+best_of_n:
+  enabled: false
+
+notify:
+  enabled: false
+
+llm:
+  api_key: "${CLAUDE_API_KEY}"
+  base_url: "https://api.anthropic.com"
+  model: "claude-opus-4-6"
+
+agent_debugger:
+  llm:
+    api_key: "${CLAUDE_API_KEY}"
+    base_url: "https://api.anthropic.com"
+    model: "claude-opus-4-6"
+    api_type: anthropic_chat_completion
+    max_tokens: 128000
+    thinking:
+      type: adaptive
+    output_config:
+      effort: "high"
+
+code_agent_patch:
+  tool_call_mode: anthropic
+  llm_config:
+    api_type: anthropic_chat_completion
+    max_tokens: 128000
+    reasoning: null
+    thinking:
+      type: adaptive
+    output_config:
+      effort: "high"
+
+evolve_agent:
+  tool_call_mode: anthropic
+  llm_config:
+    api_key: "${CLAUDE_API_KEY}"
+    base_url: "https://api.anthropic.com"
+    model: "claude-opus-4-6"
+    api_type: anthropic_chat_completion
+    max_tokens: 128000
+    reasoning: null
+    thinking:
+      type: adaptive
+    output_config:
+      effort: "high"
+
+explore_agent_patch:
+  tool_call_mode: anthropic
+  llm_config:
+    api_type: anthropic_chat_completion
+    max_tokens: 128000
+    reasoning: null
+    thinking:
+      type: adaptive
+    output_config:
+      effort: "high"
+
+explore_agent:
+  enabled: false
+  model: "claude-opus-4-6"
