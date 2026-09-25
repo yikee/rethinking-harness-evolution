@@ -7,6 +7,11 @@ This repo supports four methodologies:
 - Harness Evolution
 - Harness Scaling
 
+The ARC-AGI-3 experiments (plain agent vs. VISTA harness with/without notes
+vs. VISTA `--evolve`, for Claude Code and Codex) live in
+[`arc-agi-3/`](arc-agi-3/README.md) and have their own setup; the rest of this
+README covers the Terminal-Bench pipeline.
+
 ## Setup
 
 Requirements:

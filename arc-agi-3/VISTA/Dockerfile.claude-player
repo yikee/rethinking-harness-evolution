@@ -1,0 +1,16 @@
+FROM ubuntu:22.04
+
+ARG CLAUDE_CODE_VERSION=2.1.220
+
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        ca-certificates \
+        bubblewrap \
+        curl \
+        python3 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -fsSL https://claude.ai/install.sh | bash -s ${CLAUDE_CODE_VERSION} \
+    && install -d /opt/claude \
+    && cp /root/.local/share/claude/versions/${CLAUDE_CODE_VERSION} /opt/claude/claude \
+    && chmod 0755 /opt/claude/claude
